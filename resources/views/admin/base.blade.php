@@ -31,6 +31,9 @@
                     <a class="nav-link active" aria-current="page" href="">Login</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="">Logout</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="">Cart</a>
                 </li>
             </ul>

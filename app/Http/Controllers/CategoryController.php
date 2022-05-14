@@ -15,7 +15,7 @@ class CategoryController extends Controller
     public function index()
     {
         $data['category'] =Category::all();
-        return view('admin.manageCategory',$data);
+        return view('admin.manage.manageCategory',$data);
     }
 
     /**
@@ -25,8 +25,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $data['category'] = Category::where('parent_id',0)->get();
-        return view('admin.insertCategory',$data);
+        $data['categories'] = Category::where('parent_id',0)->get();
+        return view('admin.insert.insertCategory',$data);
     }
 
     /**
@@ -45,7 +45,7 @@ class CategoryController extends Controller
         $category->cat_title=$request->cat_title;
         $category->parent_id=$request->parent_id;
         $category->save();
-        return redirect()->route('category.index');
+        return redirect()->route('category.index')->with('success','Wow! data is inserted successfulley');
     }
 
     /**
@@ -67,19 +67,20 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        $data['categories'] = Category::where('parent_id',0)->get();
+        $data['category'] = $category;
+        return view('admin.edit.editCategory',$data);
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Category $category)
     {
-        //
+        $request->validate([
+            'cat_title'=>'required',
+            'parent_id'=>'required',
+        ]);
+        $category->cat_title=$request->cat_title;
+        $category->parent_id=$request->parent_id;
+        $category->save();
+        return redirect()->route('category.index')->with('success','Wow! data is inserted successfulley');
     }
 
     /**
@@ -92,6 +93,6 @@ class CategoryController extends Controller
     {
         $category = Category::find($category->id);
         $category->delete();
-        return redirect()->route('category.index');
+        return redirect()->route('category.index')->with('error','Oh! data is deleted successfulley');
     }
 }

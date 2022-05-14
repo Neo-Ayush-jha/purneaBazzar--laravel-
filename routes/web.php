@@ -13,12 +13,13 @@ Route::get('/checkout',[PublicController::class,'checkout'])->name('checkout');
 Route::prefix('admin')->group(function(){
     Route::get('/',[Admincontroller::class , 'index'])->name('admin_home');
     Route::get('/manage_order',[Admincontroller::class , 'order'])->name('manage_order');
-    Route::get('/manage_barand',[Admincontroller::class , 'barand'])->name('manage_barand');
     Route::resources([
         'product'=>App\Http\controllers\ProductController::class,
         'payment'=>App\Http\controllers\PaymentController::class,
         'category'=>App\Http\controllers\CategoryController::class,
         'coupon'=>App\Http\controllers\CouponsController::class,
+        'brand'=>App\Http\controllers\BrandController::class,
+        'address'=>App\Http\controllers\AddressController::class,
         'user'=>App\Http\controllers\UserController::class,
         ]);
 });

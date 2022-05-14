@@ -14,7 +14,8 @@ class CouponsController extends Controller
      */
     public function index()
     {
-        return view('admin.manageCoupons');
+        $data['coupon'] = Coupons::all();
+        return view('admin.manage.manageCoupons',$data);
     }
 
     /**
@@ -24,7 +25,8 @@ class CouponsController extends Controller
      */
     public function create()
     {
-        //
+
+        return view('admin.insert.insertCoupon');
     }
 
     /**
@@ -35,7 +37,18 @@ class CouponsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+           'code'=>'required', 
+           'amount'=>'required', 
+           'status'=>'required', 
+        ]);
+        $coupon = new Coupons();
+        $coupon->code = $request->code;
+        $coupon->amount = $request->amount;
+        $coupon->status = $request->status;
+        $coupon->save();
+
+        return redirect()->route('coupon.index')->with('success','Wow! data is inserted successfulley');
     }
 
     /**
@@ -57,29 +70,27 @@ class CouponsController extends Controller
      */
     public function edit(Coupons $coupons)
     {
-        //
+        $data['coupon'] = $coupons;
+        return view('admin.edit.editCoupon',$data);
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Coupons  $coupons
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Coupons $coupons)
     {
-        //
+        $request->validate([
+            'code'=>'required', 
+           'amount'=>'required', 
+           'status'=>'required', 
+        ]);
+        $coupons->code = $request->code;
+        $coupons->amount = $request->amount;
+        $coupons->status = $request->status;
+        $coupons->save();
+        return redirect()->route('coupon.index')->with('success','Wow! data updated is inserted successfulley');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Coupons  $coupons
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Coupons $coupons)
     {
-        //
+//dd($coupons);;die;
+
+        $coupons->delete();
+        return redirect()->route('coupon.index')->with('error','Ho! data is delete successfulley');
     }
 }

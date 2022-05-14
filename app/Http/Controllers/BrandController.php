@@ -14,72 +14,43 @@ class BrandController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+        $data['brands'] = Brand::all();
+        return view('admin.manage.manageBarand',$data);  
+      }
     public function create()
     {
-        //
+        return view('admin.insert.insertBarand');
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'brand_title'=>'required',
+        ]);
+        $brand=new Brand();
+        $brand->brand_title=$request->brand_title;
+        $brand->save();
+        return redirect()->route('brand.index')->with('success','Wow! data is inserted successfulley');
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Brand  $brand
-     * @return \Illuminate\Http\Response
-     */
     public function show(Brand $brand)
     {
         //
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Brand  $brand
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Brand $brand)
     {
-        //
+        return view('admin.edit.editBarand',['brand'=>$brand]);
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Brand  $brand
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Brand $brand)
     {
-        //
+        $request->validate([
+            'brand_title'=>'required',
+        ]);
+        $brand->brand_title=$request->brand_title;
+        $brand->save();
+        return redirect()->route('brand.index')->with('success','Wow! data updated is inserted successfulley');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Brand  $brand
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Brand $brand)
     {
-        //
+        $brand ->delete();
+        return redirect()->route('brand.index')->with('error','Ho! data is delete successfulley');
     }
 }

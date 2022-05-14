@@ -11,7 +11,7 @@ class Admincontroller extends Controller
     }
     
     public function order(){
-        return view('admin.manageOrder');
+        return view('admin.manage.manageOrder');
     }
     public function barand(){
         return view('admin.manageBarand');

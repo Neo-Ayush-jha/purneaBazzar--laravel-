@@ -1,9 +1,9 @@
-@extends('admin.base')
+@extends('./admin.base')
 @section('jha')
     <div class="container">
         <div class="row mt-3">
             <div class="col-3">
-                @include('admin.side')
+                @include('./admin.side')
             </div>
             <div class="col-9">
                <h3>Insert Category Here</h3>
@@ -15,7 +15,7 @@
                             <label for="">Parent</label>
                             <select name="parent_id" value="{{old('parent_id')}}" id="" class="form-select">
                                 <option value="0">Main Category</option>
-                                @foreach ($category as $item)
+                                @foreach ($categories as $item)
                                 <option value="{{$item->id}}">{{$item->cat_title}}</option>
                                 @endforeach
                             </select>
@@ -40,4 +40,3 @@
         </div>
     </div>
 @endsection
- 
