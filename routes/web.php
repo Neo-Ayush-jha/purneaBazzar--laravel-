@@ -6,9 +6,15 @@ use App\Http\controllers\PublicController;
 use App\Http\controllers\Admincontroller;
 
 Route::get('/home',[PublicController::class,'index'])->name('home');
-Route::get('/view/{p_id}',[PublicController::class,'viewProduct'])->name('view-product');
+Route::get('/category/{cat_id?}',[PublicController::class,'index'])->name('filter');
+Route::get('/view/{p_id}',[PublicController::class,'viewProduct'])->name('viewProduct');
 Route::get('/cart',[PublicController::class,'cart'])->name('cart');
 Route::get('/checkout',[PublicController::class,'checkout'])->name('checkout');
+
+// cart
+Route::get("/add-to-cart/{p_id}",[PublicController::class,"addToCart"])->middleware(['auth'])->name("addToCart");
+Route::get("/remove-to-cart/{p_id}",[PublicController::class,"removeFromCart"])->name("removeFromCart");
+Route::get("/delete-item-from-cart/{p_id}",[PublicController::class,"removeItemFromCart"])->name("removeItemFromCart");
 
 Route::prefix('admin')->group(function(){
     Route::get('/',[Admincontroller::class , 'index'])->name('admin_home');

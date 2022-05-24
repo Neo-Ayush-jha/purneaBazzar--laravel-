@@ -20,7 +20,7 @@
                 </div>
                 <div class="row">
                     <div class="col-8">
-                        <h4 my-3>Manage category</h4 my-3>
+                        <h4 my-3>Manage barand</h4 my-3>
                     </div>
                     <div class="col-4">
                         <h4 my-3><a href="{{route('brand.create')}}" class="btn btn-success">Add New barand</a></h4 my-3>

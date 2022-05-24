@@ -87,7 +87,7 @@ class ProductController extends Controller
     {
         $data['category'] = Category::all();
         $data['brand'] = Brand::all();
-        $data['product']=Product::all();
+        $data['product']=$product;
         return view('admin.edit.editProduct',$data);
     }
 

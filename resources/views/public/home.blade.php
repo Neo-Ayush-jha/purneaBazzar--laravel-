@@ -3,30 +3,25 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-3">
-                <div class="list-group">
-                    <a href="" class="list-group-item list-group-item-action">Item 1</a>
-                    <a href="" class="list-group-item list-group-item-action">Item 1</a>
-                    <a href="" class="list-group-item list-group-item-action">Item 1</a>
-                    <a href="" class="list-group-item list-group-item-action">Item 1</a>
-                    <a href="" class="list-group-item list-group-item-action">Item 1</a>
-                    <a href="" class="list-group-item list-group-item-action">Item 1</a>
-                    <a href="" class="list-group-item list-group-item-action">Item 1</a>
-                </div>
+               @include('public.side')
             </div>
             <div class="col-9">
                 <div class="row">
-                    <div class="col-3">
-                        <div class="card">
-                            <img src="http://via.placeholder.com/300x400.png" class="w-100" style="object-fit: cover;height:220px" alt="">
-                            <div class="card-body">
-                                <strong>Product title</strong>
-                                <p class="m-0 p-0">Rs. 400/- <del>600/-</del></p>
-                                <p class="m-0 p-0">Mobile</p>
+                        @foreach ($products as $item)
+                        <div class="col-3">
+                            <div class="card">
+                                <img src="{{asset('image/'.$item->image)}}" class="w-100" style="object-fit: cover;height:220px" alt="">
+                                <div class="card-body">
+                                    <strong>{{$item->title}}</strong>
+                                    <p class="m-0 p-0">Rs. {{$item->discount_price}}/- <del>{{$item->price}}/-</del></p>
+                                    <p class="m-0 text-lead p-0">{{$item->category->cat_title}}</p>
+                                    <a href="{{route("viewProduct",['p_id'=>$item->id])}}" class="stretched-link"></a>
+                                </div>
                             </div>
                         </div>
+                        @endforeach
                     </div>
                 </div>
-            </div>
         </div>
     </div>
 @endsection
