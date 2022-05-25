@@ -8,7 +8,7 @@
             <div class="col-9">
                 <div class="row">
                         @foreach ($products as $item)
-                        <div class="col-3">
+                        <div class="col-3 my-2">
                             <div class="card">
                                 <img src="{{asset('image/'.$item->image)}}" class="w-100" style="object-fit: cover;height:220px" alt="">
                                 <div class="card-body">

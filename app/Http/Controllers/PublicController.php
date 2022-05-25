@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use   Anand\LaravelPaytmWallet\Facades\PaytmWallet;
 use Illuminate\Http\Request;
 use App\Models\{Product,Category,Order,OrderItem};
 use Illuminate\Support\Facades\Auth;
@@ -104,4 +104,43 @@ class PublicController extends Controller
         }
         return redirect()->route('cart');
     }
+    public function order()
+    {
+        $payment = PaytmWallet::with('receive');
+        $payment->prepare([
+          'order' =>'123451216789',
+          'user' => '1',
+          'mobile_number' => '9117685337',
+          'email' => 'ayush91176@gmail.com',
+          'amount' =>7000,
+          'callback_url' => 'http://127.0.0.1:8000/payment/call-back'
+        ]);
+        return $payment->receive();
+    }
+
+    /**
+     * Obtain the payment information.
+     *
+     * @return Object
+     */
+    public function paymentCallback()
+    {
+        $transaction = PaytmWallet::with('receive');
+        
+        $response = $transaction->response(); // To get raw response as array
+        //Check out response parameters sent by paytm here -> http://paywithpaytm.com/developer/paytm_api_doc?target=interpreting-response-sent-by-paytm
+        
+        if($transaction->isSuccessful()){
+          //Transaction Successful
+          print_r('Transaction Successful');
+        }else if($transaction->isFailed()){
+          //Transaction Failed
+        }else if($transaction->isOpen()){
+          //Transaction Open/Processing
+        }
+        $transaction->getResponseMessage(); //Get Response Message If Available
+        //get important parameters via public methods
+        $transaction->getOrderId(); // Get order id
+        $transaction->getTransactionId(); // Get transaction id
+    }  
 }

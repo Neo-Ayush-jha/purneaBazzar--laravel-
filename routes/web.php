@@ -15,7 +15,10 @@ Route::get('/checkout',[PublicController::class,'checkout'])->name('checkout');
 Route::get("/add-to-cart/{p_id}",[PublicController::class,"addToCart"])->middleware(['auth'])->name("addToCart");
 Route::get("/remove-to-cart/{p_id}",[PublicController::class,"removeFromCart"])->name("removeFromCart");
 Route::get("/delete-item-from-cart/{p_id}",[PublicController::class,"removeItemFromCart"])->name("removeItemFromCart");
+Route::get("/payment/order",[PublicController::class,"order"]);
+Route::post("payment/call-back",[PublicController::class,"paymentCallback"]);
 
+// Route::get('/payment/order',[PublicC])
 Route::prefix('admin')->group(function(){
     Route::get('/',[Admincontroller::class , 'index'])->name('admin_home');
     Route::get('/manage_order',[Admincontroller::class , 'order'])->name('manage_order');

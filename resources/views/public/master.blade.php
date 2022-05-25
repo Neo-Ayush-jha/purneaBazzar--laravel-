@@ -40,8 +40,8 @@
 
     @show
     <div class="container-fluid">
-        <div class="row text-light"style="background-image: linear-gradient(to top, rgb(244, 59, 71) 0%, rgb(69, 58, 148) 100% !important">
-            <h4 class="text-center mb-5 mt-3 ">CodeWithSadiQ</h4>
+        <div class="row text-light"style="background-image: linear-gradient(to right, rgba(32, 40, 119, 1), rgba(55, 46, 149, 1), rgba(83, 49, 177, 1), rgba(114, 48, 205, 1), rgba(150, 41, 230, 1)) !important">
+            <h4 class="text-center mb-5 mt-3 ">Purnea Bazar</h4>
             <div class="col-3 mx-auto my-auto">
                 {{-- <div class="col my-auto"> --}}
                     <p class="fs-5">Quick link</p>
@@ -62,11 +62,11 @@
             <div class="col-3 mx-auto my-auto">
                 <p class="fs-5">Ramavtar Market, Near Dog Hospital</p>
                 <p class="fw-light">Thana Chowk, Gandhinagar, Madhubani, Purnea - 854301</p>
-                <p class="fw-light">+91 95 4680 5580</p>
-                <p class="fw-light">www.codewithsadiq.com</p>
+                <p class="fw-light">9117685337</p>
+                <p class="fw-light">www.ayush91176@gmail.com</p>
             </div>
             
-            <p class="fw-light text-center">© Code with SadiQ, All rights reserved</p>
+            <p class="fw-light text-center">© Code with Ayush Jha, All rights reserved</p>
         </div>
     </div>
 </body>
