@@ -27,6 +27,16 @@
                         <td>DateOfOrder</td>
                         <td>Action</td>
                     </tr>
+                    @foreach ($order as $item)
+                        <tr>
+                            <td>{{$item->id}}</td>
+                            <td>{{$item->user_id}}</td>
+                            <td>{{$item->address_id}}</td>
+                            <td>{{$item->coupon_id}}</td>
+                            <td>{{$item->isDeliverd}}</td>
+                            <td>{{$item->isShippend}}</td>
+                        </tr>
+                    @endforeach
                 </table>
             </div>
         </div>

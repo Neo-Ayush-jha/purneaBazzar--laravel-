@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Address;
 use Illuminate\Http\Request;
-
+use App\Http\Controllers\PublicController;
+use Auth;
 class AddressController extends Controller
 {
     /**
@@ -14,7 +15,8 @@ class AddressController extends Controller
      */
     public function index()
     {
-        return view('admin.manage.addressManagement');
+        $data['address'] = Address::all();
+        return view('admin.manage.addressManagement',$data);
     }
 
     /**
@@ -24,7 +26,9 @@ class AddressController extends Controller
      */
     public function create()
     {
-        //
+        $data['user']=User::all();
+        $data['address'] =Address::all();
+        return view('admin.insert.insertAddress',$data);
     }
 
     /**
@@ -35,7 +39,30 @@ class AddressController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'user_id'=>'required',
+            'street'=>'required',
+            'landmark'=>'required',
+            'pincode'=>'required',
+            'city'=>'required',
+            'state'=>'required',
+            'name'=>'required',
+            'contact'=>'required',
+        ]);
+        $data=new Address();
+        $data->user_id=$request->user_id;
+        $data->user_id=Auth::id();
+        $data->street=$request->street;
+        $data->landmark=$request->landmark;
+        $data->pincode=$request->pincode;
+        $data->city=$request->city;
+        $data->state=$request->state;
+        $data->name=$request->name;
+        $data->contact=$request->contact;
+        $data->type=$request->type;
+        $data->save();
+        PublicController::assignAddress($data->id);
+        return redirect()->route('checkout');
     }
 
     /**
@@ -57,7 +84,9 @@ class AddressController extends Controller
      */
     public function edit(Address $address)
     {
-        //
+        $data['user'] = user::all();
+        $data['address'] = $address;
+        return view('admin.edit.editAddress',$data);
     }
 
     /**
@@ -69,7 +98,29 @@ class AddressController extends Controller
      */
     public function update(Request $request, Address $address)
     {
-        //
+        {
+            $request->validate([
+                'user_id'=>'required',
+                'street'=>'required',
+                'landmark'=>'required',
+                'pincode'=>'required',
+                'city'=>'required',
+                'state'=>'required',
+                'name'=>'required',
+                'contact'=>'required',
+            ]);
+            $data->user_id=Auth::id();
+            $data->street=$request->street;
+            $data->landmark=$request->landmark;
+            $data->pincode=$request->pincode;
+            $data->city=$request->city;
+            $data->state=$request->state;
+            $data->name=$request->name;
+            $data->contact=$request->contact;
+            $data->type=$request->type;
+            $data->save();
+            return redirect()->route('address.index');
+        }
     }
 
     /**
@@ -80,6 +131,8 @@ class AddressController extends Controller
      */
     public function destroy(Address $address)
     {
-        //
+        $address->delete();
+        return redirect()->route('address.index');
+
     }
 }
