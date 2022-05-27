@@ -35,6 +35,12 @@
                             <td>{{$item->coupon_id}}</td>
                             <td>{{$item->isDeliverd}}</td>
                             <td>{{$item->isShippend}}</td>
+                            <td>{{$item->dateOfOrderd}}</td>
+                            <td>{{$item->ordered}}</td>
+                            <td>
+                                <input type="submit" value="X" class="btn btn-danger">
+                                <a href="" class="btn btn-success">Edit</a>
+                            </td>
                         </tr>
                     @endforeach
                 </table>

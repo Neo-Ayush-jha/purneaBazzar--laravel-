@@ -6,6 +6,7 @@
         </div>
     </div>
     <div class="container mt-3">
+        @if ($order)
         <div class="row">
             <div class="col-8">
                 <h1>My Cart</h1>
@@ -34,18 +35,45 @@
             </div>
             <div class="col-4">
                 <div class="list-group">
-                    <a href="" class="list-group-item list-group-item-action">Total Amount <span class="floate-end">Rs. {{total_amount()}}/-</span></a>
-                    <a href="" class="list-group-item list-group-item-action text-white bg-success">Total Descount <span class="floate-end">Rs. {{total_saving_amount()}}/-</span></a>
-                    <a href="" class="list-group-item list-group-item-action">Tax (18%)<span class="floate-end">Rs. {{get_tax()}}</span></a>
+                    <div href="" class="list-group-item list-group-item-action">Total Amount <span class="floate-end">Rs. {{total_amount()}}/-</span></div>
+                    <div href="" class="list-group-item list-group-item-action text-white bg-success">Total Descount <span class="floate-end">Rs. {{total_saving_amount()}}/-</span></div>
+                    <div href="" class="list-group-item list-group-item-action">Tax (18%)<span class="floate-end">Rs. {{get_tax()}}</span></div>
                     {{-- <a href="" class="list-group-item list-group-item-action text-white bg-warning">Coupon Descount <span class="floate-end">Rs. {{$order->coupon->amount}} /-</span></a> --}}
-                    <a href="" class="list-group-item list-group-item-action text-white bg-warning">Coupon Descount <span class="floate-end">Rs. 00 /-</span></a>
-                    <a href="" class="list-group-item list-group-item-action"><h5>Payment Amount</h5><span class="floate-end">Rs. {{get_payable_amount()}} /-</span></a>
+                    @if ($order->coupon_id != null)
+                        <div href="" class="list-group-item list-group-item-action text-white bg-warning">Coupon Descount <span class="floate-end">Rs. {{$order->coupon->amount}} /-</span></div>
+                    @endif
+                    <div href="" class="list-group-item list-group-item-action"><h5>Payment Amount</h5><span class="floate-end">Rs. {{get_payable_amount()}} /-</span></div>
                 </div>
                 <div class="row mt-2 px-2">
                     <a href="" class="btn btn-success col">Continer Shopping</a>
                     <a href="{{route('checkout')}}" class="btn btn-danger col ms-2">CheckOut</a>
                 </div>
+                @if ($order->coupon_id == null)
+                    <div class="card mt-4">
+                        <div class="card-body">
+                            <h6 class="lead">Have any Coupon?</h6>
+                            <form action="{{route('applyCoupon')}}" class="d-flex" method="post">
+                                @csrf
+                                <input type="text" placeholder="Enter Code" name="code" value="{{old('code')}}" class="form-control">
+                                @error('code')
+                                    <p class="btn btn-danger">{{$massage}}</p>
+                                @enderror
+                                <input type="submit" value="Apply" class="btn btn-success">
+                            </form>
+                            @if (($msg = Session::get('msg')))
+                                <div class="alert alert-dabger mt-3 p-1">{{$msg}}</div>
+                            @endif
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
-    </div>
+        @else
+        <h1>Cart is empty please buy more save more</h1>
+        @endif
+  
+        @guest
+            <H1>Sorry Cart is Empty Please Login for Access </H1>
+        @endguest
+      </div>
 @endsection

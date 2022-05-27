@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use   Anand\LaravelPaytmWallet\Facades\PaytmWallet;
 use Illuminate\Http\Request;
-use App\Models\{Product,Category,Order,OrderItem,Coupon,Address};
+use App\Models\{Product,Category,Order,OrderItem,Coupons,Address};
 use Illuminate\Support\Facades\Auth;
 class PublicController extends Controller
 {
@@ -40,10 +40,11 @@ class PublicController extends Controller
     
     static public function assignAddress($id){
         $address = Address::findOrFail($id);
-        $order=get_order();
-        $order->address_id=$address->id;
+        $order = get_order();
+        $order->address_id = $address->id;
         $order->save();
-        return redirect()->router('checlout');
+        return redirect()->route("checkout");
+
     }
     public function addToCart(Request $request,$p_id){
         $product=Product::find($p_id);
@@ -51,8 +52,8 @@ class PublicController extends Controller
         if($product){
             $order=Order::where([['ordered',false],["user_id",Auth::id()]])->first();
             if($order){
-                // $orderItem=orderItem::where([['ordered',false],['order_id',$order->id],['product_id',$product->id]])->first();
-                $orderItem=get_order();
+                $orderItem=orderItem::where([['ordered',false],['order_id',$order->id],['product_id',$product->id]])->first();
+                // $orderItem=get_order();
                 if($orderItem){
                     $orderItem->qty +=1;
                     $orderItem->save();
@@ -115,29 +116,31 @@ class PublicController extends Controller
         return redirect()->route('cart');
     }
     private function CheckCode($code){
-        $coupon = Coupon::where([['code',$code],["status",1]])->first();
-        return  $coupon;
+        $Coupons = Coupons::where([['code',$code],["status",1]])->first();
+        return  $Coupons;
     }
-    public function applyCoupon(Request $req){
+    public function applyCoupons(Request $req){
         $req->validate([
-            'code'=>'required'
+            'code' => 'required'
         ]);
-        if($coupon = $this->CheckCode($req->code)){
-            $order= Order::where([['ordered',false],['user_id', Auth::id()]])->first();
-            $order->coupon_id=$coupon->id;
+
+        if($Coupons = $this->CheckCode($req->code)){
+            $order = Order::where([['ordered',false],['user_id',Auth::id()]])->first();
+            $order->Coupons_id = $Coupons->id;
             $order->save();
-            return redirect()->route('cart');
+            return redirect()->route("cart");
         }
         else{
-            return redirect()->route('cart')->with('msg','invalid Coupon');
+            return redirect()->route("cart")->with("msg","Invalid Coupons");
         }
     }
-    public function removeCoupon(){
-        $order = Order::where([['ordered',false],['user_id',Auth::id()]])->first();
-        $order->coupon_id=null;
-        $order->save();
-        return redirect()->route('cart');
+    public function removeCoupons(){
+            $order = Order::where([['ordered',false],['user_id',Auth::id()]])->first();
+            $order->Coupons_id = null;
+            $order->save();
+            return redirect()->route("cart");
     }
+
     public function order()
     {
         $payment = PaytmWallet::with('receive');

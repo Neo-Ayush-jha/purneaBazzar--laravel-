@@ -6,103 +6,113 @@
         </div>
     </div>
     <div class="container mt-3">
-        <div class="row mt-3">
+        <div class="row mt-3 mb-5" >
             <div class="col-8 mt-3">
                 <div class="card">
                     <div class="card-body">
-                        <form action="" method="post">
+                        <form action="{{route("address.store")}}" method="POST">
                             @csrf
-                            <div class="row mt-3">
-                                <div class="col-4">
-                                    <label for="">Name</label>
-                                    <input type="text" , name="name" value="{{old('name')}}" class="form-conyrol">
-                                    @error('name')
-                                        <p class="small text-danger">{{$massage}}</p>
-                                    @enderror
-                                </div>
-                                <div class="col-4">
-                                    <label for="">Contact</label>
-                                    <input type="text" , name="contact" value="{{old('contact')}}" class="form-conyrol">
-                                    @error('contact')
-                                        <p class="small text-danger">{{$massage}}</p>
-                                    @enderror
-                                </div>
-                                <div class="col-4">
-                                    <label for="">Address</label>
-                                    <input type="text" , name="address" value="{{old('address')}}" class="form-conyrol">
-                                    @error('address')
-                                        <p class="small text-danger">{{$massage}}</p>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="row mt-3">
-                                <div class="col-5">
-                                    <label for="">Street/village</label>
-                                    <input type="text" , name="street" value="{{old('street')}}" class="form-conyrol">
-                                    @error('street')
-                                        <p class="small text-danger">{{$massage}}</p>
-                                    @enderror
-                                </div>
-                                <div class="col-4">
-                                    <label for="">LandMark</label>
-                                    <input type="text" , name="landmark" value="{{old('landmark')}}" class="form-conyrol">
-                                    @error('landmark')
-                                        <p class="small text-danger">{{$massage}}</p>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="row mt-3">
-                                <div class="col-4">
-                                    <label for="">State</label>
-                                    <input type="text" , name="state" value="{{old('state')}}" class="form-conyrol">
-                                    @error('state')
-                                        <p class="small text-danger">{{$massage}}</p>
-                                    @enderror
-                                </div>
-                                <div class="col-4">
-                                    <label for="">City</label>
-                                    <input type="text" , name="city" value="{{old('city')}}" class="form-conyrol">
-                                    @error('city')
-                                        <p class="small text-danger">{{$massage}}</p>
-                                    @enderror
-                                </div>
-                                <div class="col-4">
-                                    <label for="">Pincode</label>
-                                    <input type="text" , name="pincode" value="{{old('pincode')}}" class="form-conyrol">
-                                    @error('pincode')
-                                        <p class="small text-danger">{{$massage}}</p>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col mt-4">
-                                <input type="submit" name="submit" class="btn btn-success w-100">
-                            </div>
+                            <div class="row">
+                               <div class="col-4">
+                                     <label for="">Name</label>
+                                     <input type="text" name="name" class="form-control" value="{{old('name')}}">
+                                     @error('name')
+                                         <p class="small text-danger">{{$message}}</p>
+                                     @enderror
+                               </div>
+                               <div class="col-4">
+                                     <label for="">Contact</label>
+                                     <input type="text" name="contact" class="form-control" value="{{old('contact')}}">
+                                     @error('contact')
+                                         <p class="small text-danger">{{$message}}</p>
+                                     @enderror
+                                 </div>
+                                 <div class="col-4">
+                                     <label for="">type</label>
+                                     <select name="type" class="form-select">
+                                             <option value="office">Office</option>
+                                             <option value="home">home</option>
+                                     </select>
+                                     @error('type')
+                                         <p class="small text-danger">{{$message}}</p>
+                                     @enderror
+                                 </div>
+                             </div>
+                             <div class="row mt-3">
+                                 <div class="col-6">
+                                     <label for="">street/village</label>
+                                     <input type="text" name="street" class="form-control" value="{{old('street')}}">
+                                     @error('street')
+                                         <p class="small text-danger">{{$message}}</p>
+                                     @enderror
+                                 </div>
+                                 <div class="col-6">
+                                     <label for="">landmark</label>
+                                     <input type="text" name="landmark" class="form-control" value="{{old('landmark')}}">
+                                     @error('landmark')
+                                         <p class="small text-danger">{{$message}}</p>
+                                     @enderror
+                                 </div>
+                             </div>
+                             <div class="row mt-3">
+                                 <div class="col-6">
+                                     <label for="">City</label>
+                                     <input type="text" name="city" class="form-control" value="{{old('city')}}">
+                                     @error('city')
+                                         <p class="small text-danger">{{$message}}</p>
+                                     @enderror
+                                 </div>
+                                 <div class="col-6">
+                                     <label for="">state</label>
+                                     <input type="text" name="state" class="form-control" value="{{old('state')}}">
+                                     @error('state')
+                                         <p class="small text-danger">{{$message}}</p>
+                                     @enderror
+                                 </div>
+                             </div>
+                             <div class="row mt-3">
+                                 <div class="col-6">
+                                     <label for="">Pincode</label>
+                                     <input type="text" name="pincode" class="form-control" value="{{old('pincode')}}">
+                                     @error('pincode')
+                                         <p class="small text-danger">{{$message}}</p>
+                                     @enderror
+                                 </div>
+                                 <div class="col-6 mt-4 ">
+                                     <input type="submit" name="submit" class="btn btn-success w-100" >
+                                 </div>
+                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-            <div class="col-4">
-                <div class="card mt-4 bg-light">
+            <div class="col-4 ">
+                @foreach ($address as $item)
+                <div class="card mt-3  @if ($item->type == "office")
+                    border border-success
+                @else
+                    border border-danger
+                @endif bg-light">
                     <div class="card-body">
-                        <h5>Ayush (123654789)</h5>
-                        <p class="small">Line basti Panchayat bhawan near newalal chowk. <br>Purnia (Purnea).</p>
-                        <a href="" class="btn btn-info small">Bihar (854301)</a>
+                        <span class="@if ($item->type== "office")
+                            bg-success
+                        @else
+                            bg-danger
+                        @endif badge position-absolute shadow-sm text-capitalize" style="right:0;border-radius:5px 0px 0px 5px">
+                            {{$item->type}}
+                        </span>                    
+                        <h5>{{$item->name}} ({{$item->contact}})</h5>
+                        <p class="small mb-0">{{$item->street}} <br>{{$item->city}} ({{$item->state}}) - {{$item->pincode}}</p>
+                        <p class="small mb-0">LandMark: {{$item->landmark}}</p>
+                        <form action="{{route("paymentnow")}}" method="POST">
+                            <input type="hidden" name="address_id" value="{{$item->id}}">
+                            <input type="hidden" name="amount" value="{{get_payable_amount()}}">
+                            @csrf
+                            <input type="submit" class="btn btn-warning small mt-2 " value="use This">
+                        </form>
                     </div>
                 </div>
-                <div class="card mt-4 bg-light">
-                    <div class="card-body">
-                        <h5>Aditya (123654789)</h5>
-                        <p class="small">Line basti Panchayat bhawan near newalal chowk. <br>Purnia (Purnea).</p>
-                        <a href="" class="btn btn-info small">Bihar (854301)</a>
-                    </div>
-                </div>
-                <div class="card mt-4 bg-light">
-                    <div class="card-body">
-                        <h5>Ayush (123654789)</h5>
-                        <p class="small">Lorem ipsum dolor sit amet. <br>Lorem, ipsum dolor.</p>
-                        <a href="" class="btn btn-info small">Use this address</a>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>
