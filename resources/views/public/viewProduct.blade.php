@@ -22,11 +22,11 @@
                                 </tr>
                                 <tr>
                                     <th>Price</th>
-                                    <td>{{$product->discount_price}}  <del>{{$product->price}}</del></td>
+                                    <td>₹ {{$product->discount_price}}  <del> ₹ {{$product->price}}</del></td>
                                 </tr>
                                 <tr>
                                     <th>Office Price</th>
-                                    <td>{{$product->discount_price}} </td>
+                                    <td> ₹ {{$product->discount_price}} </td>
                                 </tr>
                                 <tr>
                                     <th>Brand</th>

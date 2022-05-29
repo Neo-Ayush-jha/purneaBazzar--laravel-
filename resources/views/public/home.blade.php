@@ -13,7 +13,7 @@
                                 <img src="{{asset('image/'.$item->image)}}" class="w-100" style="object-fit: cover;height:220px" alt="">
                                 <div class="card-body">
                                     <strong>{{$item->title}}</strong>
-                                    <p class="m-0 p-0">Rs. {{$item->discount_price}}/- <del>{{$item->price}}/-</del></p>
+                                    <p class="m-0 p-0">₹. {{$item->discount_price}}/- <del>{{$item->price}}/-</del></p>
                                     <p class="m-0 text-lead p-0">{{$item->category->cat_title}}</p>
                                     <a href="{{route("viewProduct",['p_id'=>$item->id])}}" class="stretched-link"></a>
                                 </div>

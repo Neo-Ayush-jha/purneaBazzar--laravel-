@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use   Anand\LaravelPaytmWallet\Facades\PaytmWallet;
 use Illuminate\Http\Request;
-use App\Models\{Product,Category,Order,OrderItem,Coupons,Address};
+use App\Models\{Product,Category,Order,OrderItem,Coupons,Address,Payment};
 use Illuminate\Support\Facades\Auth;
 class PublicController extends Controller
 {
@@ -141,19 +141,36 @@ class PublicController extends Controller
             return redirect()->route("cart");
     }
 
-    public function order()
+    public function order(Request $req)
     {
+        // dd($req);die;
         $payment = PaytmWallet::with('receive');
+        $order = Order::where([['ordered',false],['user_id',Auth::id()]])->first();
+        // $order = get_order();
+        $order->address_id = $req->address_id;
+        $order->save();
+
+        $user = Auth::user();
+        $pay = new Payment();
+        
+        $pay->order_id = $order->id;
+        $pay->status = 0;
+        $pay->amount = $req->amount;
+        dd($pay);die;
+        $pay->save();
+
         $payment->prepare([
-          'order' =>uniqid(),
+            
+          'order' => uniqid(),
           'user' => Auth::id(),
-          'mobile_number' => '9117685337',
-          'email' => 'ayush91176@gmail.com',
-          'amount' =>7000,
+          'mobile_number' => $user->contact,
+          'email' => $user->email,
+          'amount' => $req->amount,
           'callback_url' => 'http://127.0.0.1:8000/payment/call-back'
         ]);
         return $payment->receive();
     }
+
 
     /**
      * Obtain the payment information.
@@ -169,7 +186,24 @@ class PublicController extends Controller
         
         if($transaction->isSuccessful()){
           //Transaction Successful
-          print_r('Transaction Successful');
+          print_r($response);
+          $pay = Payment::where("order_id",get_order()->id)->first();
+          $pay->txn_id = $response['TXNID'];
+          $pay->bank_name = $response['BANKNAME'];
+          $pay->mode = $response["PAYMENTMODE"];
+          $pay->dateofpayment = $response["TXNDATE"];
+          $pay->status = 1;
+          $pay->save();
+         
+          
+          $order = get_order();
+          $order->ordered = true;
+          foreach($order->orderItem as $item){
+              $item->ordered = true;
+              $item->save();
+          }
+          $order->save();
+
         }else if($transaction->isFailed()){
           //Transaction Failed
         }else if($transaction->isOpen()){
@@ -179,5 +213,6 @@ class PublicController extends Controller
         //get important parameters via public methods
         $transaction->getOrderId(); // Get order id
         $transaction->getTransactionId(); // Get transaction id
-    }  
+    }    
+ 
 }

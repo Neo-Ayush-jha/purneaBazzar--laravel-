@@ -12,27 +12,31 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark "
+    <nav class="navbar navbar-expand-lg navbar-light "
         style="background-image: linear-gradient(to right, rgba(32, 40, 119, 1), rgba(55, 46, 149, 1), rgba(83, 49, 177, 1), rgba(114, 48, 205, 1), rgba(150, 41, 230, 1)) !important">
         <div class="container">
-            <a class="navbar-brand" href="/"> Purnea Bazar</a>
+            <a class="navbar-brand text-light" href="/">#Purnea Bazar</a>
             <form action="" method="GET" class="d-flex">
                 <input type="text" class="form-control" size="70">
                 <input type="submit" name="find" class="btn btn-success">
             </form>
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{{route('home')}}">Home</a>
+            <ul class="navbar-nav ">
+                <li class="nav-item"><a href="{{route("home")}}" class="nav-link text-light"><strong>Home</strong></a></li>
+                <li class="nav-item"><a href="{{route("cart")}}" class="nav-link text-light"><strong>Cart</strong></a></li>
+                @guest
+                <li class="nav-item"><a href="{{route("register")}}" class="nav-link text-light"><strong>Signup</strong></a></li>
+                <li class="nav-item"><a href="{{route("login")}}" class="nav-link text-light"><strong>Login</strong></a></li>
+
+                @endguest
+
+                @auth
+                <li class="nav-item"><form action="{{route("logout")}}" method="POST">
+                    @csrf
+                    <input type="submit" class="nav-link text-light bg-transparent border-0 fw-bold" value="Logout">
+                    </form>
                 </li>
 
-                <li class="nav-item">
-                    {{-- <a class="nav-link active" aria-current="page" href="{{route('cart')}}">Singup</a> --}}
-                </li>
-                @guest
-                <li class="nav-item"><a href="{{route("register")}}" class="nav-link text-dark"><strong>Signup</strong></a></li>
-                <li class="nav-item"><a href="{{route("login")}}" class="nav-link text-dark"><strong>Login</strong></a></li>
-                
-                @endguest
+                @endauth
             </ul>
         </div>
     </nav>

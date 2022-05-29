@@ -41,9 +41,8 @@ Route::prefix('admin')->group(function(){
 
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {    return view('welcome');});
+Route::get('/',[PublicController::class,'index'])->name('home');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
